@@ -20,7 +20,8 @@ router.get("/", async (req, res) => {
 
 // Search posts by caption or location
 // Example:
-// GET /posts/search?value=travel
+// GET /posts/search?caption=travel
+// GET /posts/search?location=delhi
 router.get("/search", async (req, res) => {
   // TODO:
   // Implement contains
