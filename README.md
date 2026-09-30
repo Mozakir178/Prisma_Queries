@@ -23,7 +23,7 @@ Update your `.env` file with the PostgreSQL database URL.
 Example:
 
 ```env
-DATABASE_URL="postgresql://username:password@localhost:5432/database_name"
+DATABASE_URL="postgresql://<username>@localhost:5432/<database>"
 ```
 
 Run the following commands:
@@ -47,7 +47,7 @@ npx prisma generate
 Run the seed file:
 
 ```bash
-node src/seed.js
+npx prisma db pull
 ```
 
 The seed file will insert sample users and posts into the database.
