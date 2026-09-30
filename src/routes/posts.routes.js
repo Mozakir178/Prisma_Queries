@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const prisma = require("../db");
 
-
 // POST /posts
 router.post("/", async (req, res) => {
   // TODO: Create post using Prisma
@@ -15,29 +14,9 @@ router.get("/", async (req, res) => {
 });
 
 
-// GET /posts/:id
-router.get("/:id", async (req, res) => {
-  // TODO: Fetch single post
-});
-
-
-// PATCH /posts/:id
-router.patch("/:id", async (req, res) => {
-  // TODO: Update post
-});
-
-
-// DELETE /posts/:id
-router.delete("/:id", async (req, res) => {
-  // TODO: Delete post
-});
-
-
 // --------------------------------------------------
 // Advanced Prisma Queries
 // --------------------------------------------------
-
-
 
 // Search posts by caption or location
 // Example:
@@ -82,6 +61,25 @@ router.get("/sort", async (req, res) => {
 router.get("/pagination", async (req, res) => {
   // TODO:
   // Implement skip and take
+});
+
+
+
+// GET /posts/:id
+router.get("/:id", async (req, res) => {
+  // TODO: Fetch single post
+});
+
+
+// PATCH /posts/:id
+router.patch("/:id", async (req, res) => {
+  // TODO: Update post
+});
+
+
+// DELETE /posts/:id
+router.delete("/:id", async (req, res) => {
+  // TODO: Delete post
 });
 
 
