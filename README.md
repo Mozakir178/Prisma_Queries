@@ -29,6 +29,10 @@ DATABASE_URL="postgresql://username:password@localhost:5432/database_name"
 Run the following commands:
 
 ```bash
+npm install
+```
+
+```bash
 npx prisma migrate reset
 ```
 
