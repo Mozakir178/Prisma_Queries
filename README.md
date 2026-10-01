@@ -47,7 +47,7 @@ npx prisma generate
 Run the seed file:
 
 ```bash
-npx prisma db pull
+npx prisma db seed
 ```
 
 The seed file will insert sample users and posts into the database.
