@@ -173,7 +173,7 @@ router.get("/:id", async (req, res) => {
   // TODO: Fetch single post
   try {
     const { id } = req.url
-    const give = await prisma.post.findFirst({
+    const give = await prisma.post.findUnique({
       where: {
         id
       }
