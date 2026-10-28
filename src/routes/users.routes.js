@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const prisma = require("../db");
+const bcrypt = require("bcrypt")
+const authMiddleware = require("../middleware/auth.middleware")
 
 router.post("/", async (req, res) => {
   try {
-    const { username, email, fullName, bio, isPrivate } = req.body;
+    const { username, email, fullName, bio, isPrivate,password } = req.body;
 
-    if (!username || !email || !fullName)
+    if (!username || !email || !fullName || !password)
       return res.status(400).json({ error: "Required fields missing" });
 
     const exists = await prisma.user.findFirst({
@@ -16,8 +18,14 @@ router.post("/", async (req, res) => {
     if (exists)
       return res.status(409).json({ error: "User already exists" });
 
+    const hash = await bcrypt.hash(password,10)
     const user = await prisma.user.create({
-      data: { username, email, fullName, bio, isPrivate }
+      data: { username, email, fullName, bio, isPrivate, password:hash },
+      select:{
+        id : true,
+        username : true,
+        email :true
+      }
     });
 
     res.status(201).json(user);
@@ -27,7 +35,31 @@ router.post("/", async (req, res) => {
 });
 
 
-router.get("/", async (req, res) => {
+router.post("/login",async (req,res) =>{
+  const {email,password} = req.body || {};
+
+  if(!email || !password){
+    return res.status(400).json({message: "both email and password required"})
+  }
+
+  const user = await prisma.user.findFirst({
+    where : {email }
+  });
+
+  if(!user){
+    return res.status(401).json({message : "wrong email"})
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password)
+  if(!isMatch){
+    return res.status(401).json({message : "wrong password"})
+  }
+
+  return res.json({message : "Login successfull"})
+})
+
+
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const users = await prisma.user.findMany();
     res.json(users);

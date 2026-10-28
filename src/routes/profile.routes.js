@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const prisma = require("../db");
+const authMiddleware = require("../middleware/auth.middleware");
 
 // POST /profiles - Create a profile for an existing user
 router.post("/", async (req, res) => {
@@ -48,7 +49,7 @@ router.post("/", async (req, res) => {
 });
 
 // GET /profiles - Retrieve all profiles with users
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const profiles = await prisma.profile.findMany({
       include: {

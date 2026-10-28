@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const prisma = require("../db");
+const authMiddleware = require("../middleware/auth.middleware");
 
 // --------------------------------------------------
 // Post CRUD Operations
@@ -43,7 +44,7 @@ router.post("/", async (req, res) => {
 });
 
 // GET /posts
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const posts = await prisma.post.findMany({
       include : {

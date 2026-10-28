@@ -18,6 +18,7 @@ model User {
   username  String   @unique
   email     String   @unique
   fullName  String
+  password  String
   bio       String?
   isPrivate Boolean  @default(false)
   createdAt DateTime @default(now())
